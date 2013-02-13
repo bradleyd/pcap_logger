@@ -1,25 +1,24 @@
 require "pcaplet"
-
 module PcapLogger
-  attr_reader :pcaplet
   class Pcap
-  
-    def self.new(args)
-      snaplen = args.fetch(:snaplen)
-      obj = self.allocate
-      obj.send :initialize
-      @pcaplet=Pcaplet.new(snaplen)
-      obj.instance_variable_set(:@pcaplet, @pcaplet)
-      obj
+    attr_accessor :pcaplet
+    attr_reader :device
+    def initialize(args={})
+      snaplen     = args.fetch(:snaplen) { '-s 1500' }
+      pkt_count   = args.fetch(:pkt_count) { '-c -1' }
+      @pcaplet = Pcaplet.new(self.create_commands(args.values))
     end
 
-    def pcaplet
-      @pcaplet
+    def device
+      pcaplet.instance_variable_get(:@device)
     end
 
-
-    def self.device
-      ::Pcap.lookupdev
+    def create_commands args
+      command = String.new
+      args.each do |arg|
+        command << arg << " " 
+      end
+      command
     end
   end
 end

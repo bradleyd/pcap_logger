@@ -1,21 +1,16 @@
 require "pcaplet"
 
 module PcapLogger
-  attr_reader :pcap_filter
+  attr_accessor :packet_filter
   class PcapFilter
-    
-    def self.new(options={})
-      @filter   = options.fetch(:filter)
-      @pcap_obj = options.fetch(:pcap_object)
-      obj = self.allocate
-      obj.send :initialize
-      @pcap_filter=::Pcap::Filter.new(@filter, @pcap_obj.capture)
-      obj.instance_variable_set(:@pcap_filter, @pcap_filter)
-      obj
+    def initialize(options={})
+      filter = options.fetch(:filter)
+      pcap_obj = options.fetch(:pcap_object)
+      @packet_filter = ::Pcap::Filter.new(filter, pcap_obj.capture)
     end
 
-    def pcap_filter
-      @pcap_filter
+    def packet_filter
+      @packet_filter
     end
 
   end
