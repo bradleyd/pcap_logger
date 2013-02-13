@@ -17,16 +17,19 @@ module PcapLogger
       raise(SignalException,'INT',caller)
     end
 
+     p options
     # fetch options @see bin/pcap_logger
-    snaplen   = options.fetch(:snaplen) 
-    pkt_count = options.fetch(:pkt_count) 
-    device    = options.fetch(:device) 
-    filter    = options.fetch(:filter)
+    snaplen     = options.fetch(:snaplen) 
+    pkt_count   = options.fetch(:pkt_count) 
+    device      = options.fetch(:device) 
+    filter      = options.fetch(:filter)
+    remote_port = options.fetch(:remote_port) { 20000 }
+    remote_host = options.fetch(:remote_host)
 
     @pc     = PcapLogger::Pcap.new(snaplen: snaplen, pkt_count: pkt_count)
     filter  = PcapLogger::PcapFilter.new(filter: filter, pcap_object: @pc.pcaplet)
     @pc.pcaplet.add_filter(filter.packet_filter)
-    writer  = PcapLogger::Writer.new(host: 'localhost', port: 20000)
+    writer  = PcapLogger::Writer.new(host: remote_host, port: remote_port)
     
     p @pc
 

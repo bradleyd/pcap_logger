@@ -20,6 +20,19 @@ Or install it yourself as:
 
 ## Usage
 
+If you are using rvm, you have to use `rvmsudo` to peek in on device
+There is also the assumption that you have a socket server somewhere for this to connect to and write raw packets.
+
+```ruby
+rvmsudo bin/pcap_logger -s 1500 -c 10 -f "port 80" -rp 20000 -rh '127.0.0.1'
+```
+
+##NOTE:
+  There must be a socket server listening on a port somewhere
+
+##TODO:
+  * need to give the option to change the socket server host and port from a config file or cli
+
 
 * NOTE: this must be run as root to access your local interfaces
 

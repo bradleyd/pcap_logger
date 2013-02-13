@@ -30,6 +30,14 @@ OptionParser.new do |opts|
     options[:filter] = f
   end
 
+  opts.on("-rh ", "--remote-host 127.0.0.1", "Set the remote host to send packets to--Default localhost") do |rh|
+    options[:remote_host] = rh
+  end
+
+  opts.on("-rp ", "--remote-port 20000", "Set the remote port to send packets to--Default 20000") do |rp|
+    options[:remote_port] = rp
+  end
+
 
   opts.on_tail("-h", "--help", "Show this message") do
     puts opts
@@ -48,5 +56,7 @@ end.parse!
 pcap_log = PcapLogger.start(snaplen: "-s #{options.fetch(:snaplen) { 1500}}", 
                             pkt_count: "-c #{options.fetch(:count) { -1 }}", 
                             device: "-i #{options.fetch(:device) { "eth0" }}", 
-                            filter: options.fetch(:filter) {"tcp"})
+                            filter: options.fetch(:filter) {"tcp"},
+                            remote_host: options.fetch(:remote_host) { 'localhost'},
+                            remote_port: options.fetch(:remote_port) { 20000 })
 p pcap_log
