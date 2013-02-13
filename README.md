@@ -1,6 +1,8 @@
 # PcapLogger
 
-TODO: Write a gem description
+Sniffs local traffic from an interface and sends raw packets to a remote socket ( EM server) for logging.
+
+* I use this for capturing sip traffic and storing the sip sessions in pcap files for later viewing.
 
 ## Installation
 
@@ -18,7 +20,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+
+* NOTE: this must be run as root to access your local interfaces
+
 
 ## Contributing
 
