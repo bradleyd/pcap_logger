@@ -30,12 +30,12 @@ OptionParser.new do |opts|
     options[:filter] = f
   end
 
-  opts.on("-rh ", "--remote-host 127.0.0.1", "Set the remote host to send packets to--Default localhost") do |rh|
-    options[:remote_host] = rh
+  opts.on("-r ", "--remote-host 127.0.0.1", "Set the remote host to send packets to--Default localhost") do |r|
+    options[:remote_host] = r
   end
 
-  opts.on("-rp ", "--remote-port 20000", "Set the remote port to send packets to--Default 20000") do |rp|
-    options[:remote_port] = rp
+  opts.on("-p ", "--remote-port 20000", "Set the remote port to send packets to--Default 20000") do |p|
+    options[:remote_port] = p
   end
 
 
@@ -48,10 +48,10 @@ OptionParser.new do |opts|
 
 end.parse!
 
-#if options[:device].nil? || options[:snaplen].nil?
-#  puts banner
-#  exit
-#endgg
+if options.empty?
+  puts banner
+  exit
+end
 
 pcap_log = PcapLogger.start(snaplen: "-s #{options.fetch(:snaplen) { 1500}}", 
                             pkt_count: "-c #{options.fetch(:count) { -1 }}", 

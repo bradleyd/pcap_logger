@@ -17,7 +17,6 @@ module PcapLogger
       raise(SignalException,'INT',caller)
     end
 
-     p options
     # fetch options @see bin/pcap_logger
     snaplen     = options.fetch(:snaplen) 
     pkt_count   = options.fetch(:pkt_count) 
